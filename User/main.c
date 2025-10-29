@@ -54,7 +54,7 @@ int main(void) {
 	Timer_Init();
     
     int LED[2] = {0, 0};      // [速度, 方向]
-    int PID[4] = {0, 0, 0,0};   // [kp, ki, kd]
+    int PID[4] = {0, 0,0,0};   // [kp, ki, kd]
     int i = 0, j = 0;         // 主菜单索引，子菜单索引
     int i1 = 0, j1 = 0;       // 临时索引
     int k = 1;                // 菜单标志：1-主菜单，0-子菜单
@@ -84,6 +84,7 @@ int main(void) {
             // 导航模式
 			l=3;
 			PID[l]+=Encoder_GetCount();
+			
             if(k) {
                 // 主菜单导航
                 Key_UpNum(&i1);
@@ -110,9 +111,9 @@ int main(void) {
             } 
 			else if(line(i) == 2) {
                 // PID参数编辑
-				l=j;
-                Key_UpNum1(&PID[j]);
-                Key_DownNum1(&PID[j]);
+				l=line2(j1)-2;
+                Key_UpNum1(&PID[line2(j1)-2]);
+                Key_DownNum1(&PID[line2(j1)-2]);
 				PID[l]+=Encoder_GetCount();
 				if(PID[j]>100)PID[j]=-100;
 				if(PID[j]<-100)PID[j]=100;
